@@ -10,16 +10,15 @@ import { GOOGLE_KEY } from "../hidden";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: GOOGLE_KEY,
-  authDomain: "netflixgpt-2327e.firebaseapp.com",
-  projectId: "netflixgpt-2327e",
-  storageBucket: "netflixgpt-2327e.firebasestorage.app",
-  messagingSenderId: "12789630987",
-  appId: "1:12789630987:web:fb48637bcc6fd5e8441f0e",
-  measurementId: "G-F9E6CP27D9"
+  authDomain: "cinemind-web.firebaseapp.com",
+  projectId: "cinemind-web",
+  storageBucket: "cinemind-web.firebasestorage.app",
+  messagingSenderId: "1038849076462",
+  appId: "1:1038849076462:web:99a24d2adbef4733f197ff",
+  measurementId: "G-EDFRWN6WNX"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 export const auth = getAuth(app);

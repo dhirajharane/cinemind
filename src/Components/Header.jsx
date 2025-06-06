@@ -114,7 +114,7 @@ const Header = () => {
             <div className="relative" ref={dropdownRef}>
               <img
                 className="w-10 h-10 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
-                src={user?.photoURL ? user.photoURL : SignedInLogo}
+                src={SignedInLogo}
                 alt="Usericon"
                 onClick={() => setDropdownOpen((open) => !open)}
               />

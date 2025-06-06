@@ -1,6 +1,6 @@
 import AIMovieSuggestions from "./AIMovieSuggestions"
 import AISearchBar from "./AISearchBar"
-import { BANNER_URL } from "../utils/constants";
+import { BANNER } from "../utils/constants";
 
 const AISearch = () => {
   return (
@@ -8,7 +8,7 @@ const AISearch = () => {
 
        <img 
         className="fixed top-0 left-0 w-full h-full object-cover -z-10 blur-[4px]"
-        src={BANNER_URL}
+        src={BANNER}
         alt="Banner" ></img>
 
       <AISearchBar />

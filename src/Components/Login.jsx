@@ -1,5 +1,5 @@
 import Header from "./Header";
-import { BANNER_URL, PROFILE_PHOTO } from "../utils/constants";
+import { BANNER,PROFILE_PHOTO } from "../utils/constants";
 import { useState, useRef } from "react";
 import { checkValidData } from "../utils/validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -64,7 +64,7 @@ const Login = () => {
     <div>
       <Header />
       <div>
-        <img src={BANNER_URL} alt="banner" className="w-full h-screen object-cover fixed top-0 left-0 -z-10 opacity-100" />
+        <img src={BANNER} alt="banner" className="w-full h-screen object-cover fixed top-0 left-0 -z-10 opacity-100" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
