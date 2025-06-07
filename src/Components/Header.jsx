@@ -76,11 +76,11 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-[110] bg-gradient-to-b from-black/95 via-black/80 to-transparent">
-      <div className="flex items-center justify-between px-8 py-3 w-full max-w-full">
+      <div className="flex flex-row sm:flex-row items-center justify-between  sm:px-8 py-3 w-full max-w-full">
         {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center justify-center w-full sm:w-auto">
           <img
-            className="w-60 h-58 -mt-18 -ml-6"
+            className="w-36 sm:w-60 h-auto -mt-12 sm:-mt-18 -ml-36 sm:ml-2"
             src={LOGO_IMG}
             alt="logo"
             style={{
@@ -91,10 +91,10 @@ const Header = () => {
 
         {/* Controls */}
         {user && (
-          <div className="flex items-center gap-6 -mt-18">
+          <div className="flex gap-6 sm:gap-6 -mt-12 sm:-mt-18 ">
             {showAISearch && (
               <select
-                className="bg-gray-800 text-white px-3 py-2 rounded-md cursor-pointer hover:opacity-80 transition"
+                className="bg-gray-800 text-white px-2 sm:px-3 py-2 rounded-md cursor-pointer hover:opacity-80 transition text-sm sm:text-base"
                 onChange={handleLanguageChange}
               >
                 {SUPPORTED_LANGUAGES.map((lang) => (
@@ -105,7 +105,7 @@ const Header = () => {
               </select>
             )}
             <button
-              className="bg-gradient-to-r from-purple-600 to-red-600 text-white px-6 py-2 rounded-full font-semibold shadow-md hover:scale-105 transition cursor-pointer"
+              className="bg-gradient-to-r from-purple-600 to-red-600 text-white w-auto sm:px-6 rounded-lg font-medium  hover:scale-105 transition cursor-pointer sm:text-base"
               onClick={handleAISearch}
             >
               {showAISearch ? "Home" : "Smart Movie Genie"}
@@ -113,20 +113,20 @@ const Header = () => {
             {/* Profile Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <img
-                className="w-10 h-10 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
                 src={SignedInLogo}
                 alt="Usericon"
                 onClick={() => setDropdownOpen((open) => !open)}
               />
               {dropdownOpen && (
-                <div className="absolute right-0 mt-3 w-56 bg-black bg-opacity-95 rounded-xl shadow-xl py-4 px-6 flex flex-col items-center animate-fade-in z-50">
+                <div className="absolute right-0 mt-3 w-48 sm:w-56 bg-black bg-opacity-95 rounded-xl shadow-xl py-4 px-4 sm:px-6 flex flex-col items-center animate-fade-in z-50">
                   <div className="mb-3 flex flex-col items-center">
                     <img
-                      className="w-14 h-14 rounded-full border-2 border-red-600 mb-2"
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-red-600 mb-2"
                       src={user?.photoURL ? user.photoURL : SignedInLogo}
                       alt="Usericon"
                     />
-                    <span className="text-white font-bold text-lg">
+                    <span className="text-white font-bold text-base sm:text-lg">
                       Welcome, {user.displayName || "User"}!
                     </span>
                     <span className="text-gray-400 text-xs mt-1">

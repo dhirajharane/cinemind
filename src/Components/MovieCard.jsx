@@ -6,7 +6,7 @@ const MovieCard = ({ movie }) => {
   if (!movie?.poster_path) return null;
   return (
     <div
-      className="min-w-[180px] max-w-[180px] h-[270px] bg-black bg-opacity-80 m-3 rounded-lg shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-105 hover:shadow-2xl hover:z-10 group cursor-pointer flex flex-col"
+      className="min-w-[120px] sm:min-w-[180px] max-w-[120px] sm:max-w-[180px] h-[180px] sm:h-[270px] bg-black bg-opacity-80 m-2 sm:m-3 rounded-lg shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-105 hover:shadow-2xl hover:z-10 group cursor-pointer flex flex-col"
       onClick={() => navigate(`/moviedetails/${movie.id}`)}
     >
       <img
