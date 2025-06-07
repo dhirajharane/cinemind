@@ -85,7 +85,7 @@ const ShowMovieDetails = () => {
           </p>
           <p className="text-gray-400 mb-4 text-center text-sm sm:text-base">{movie.overview}</p>
           <button
-            className="bg-red-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md text-base sm:text-lg font-bold hover:bg-red-700 transition"
+            className="bg-red-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md text-base sm:text-lg font-bold hover:bg-red-700 transition mb-4 sm:mb-0"
             onClick={() => navigate("/browse")}
           >
             Back to Home
@@ -136,4 +136,3 @@ const ShowMovieDetails = () => {
   );
 };
 export default ShowMovieDetails;
-// ...existing code...

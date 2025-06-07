@@ -75,12 +75,12 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[110] bg-gradient-to-b from-black/95 via-black/80 to-transparent">
+    <header className="fixed top-0 left-0 w-full z-[110] bg-gradient-to-b from-black/95 via-black/95 to-transparent">
       <div className="flex flex-row sm:flex-row items-center justify-between  sm:px-8 py-3 w-full max-w-full">
         {/* Logo */}
         <div className="flex items-center justify-center w-full sm:w-auto">
           <img
-            className="w-36 sm:w-60 h-auto -mt-12 sm:-mt-18 -ml-36 sm:ml-2"
+            className="w-36 sm:w-60 h-auto -mt-8 sm:-mt-18 -ml-57 sm:ml-2"
             src={LOGO_IMG}
             alt="logo"
             style={{
@@ -91,7 +91,7 @@ const Header = () => {
 
         {/* Controls */}
         {user && (
-          <div className="flex gap-6 sm:gap-6 -mt-12 sm:-mt-18 ">
+          <div className="flex gap-4 -ml-32 sm:gap-6 -mt-8 sm:-mt-18 mr- 4">
             {showAISearch && (
               <select
                 className="bg-gray-800 text-white px-2 sm:px-3 py-2 rounded-md cursor-pointer hover:opacity-80 transition text-sm sm:text-base"
@@ -105,7 +105,7 @@ const Header = () => {
               </select>
             )}
             <button
-              className="bg-gradient-to-r from-purple-600 to-red-600 text-white w-auto sm:px-6 rounded-lg font-medium  hover:scale-105 transition cursor-pointer sm:text-base"
+              className="bg-gradient-to-r from-purple-600 to-red-600 text-white px-0.5 sm:px-4 sm:py-2 rounded font-medium text-xs sm:text-base hover:scale-105 transition cursor-pointer whitespace-nowrap"
               onClick={handleAISearch}
             >
               {showAISearch ? "Home" : "Smart Movie Genie"}
@@ -113,7 +113,7 @@ const Header = () => {
             {/* Profile Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <img
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 mr-10 border-white shadow-lg cursor-pointer hover:scale-110 transition"
                 src={SignedInLogo}
                 alt="Usericon"
                 onClick={() => setDropdownOpen((open) => !open)}

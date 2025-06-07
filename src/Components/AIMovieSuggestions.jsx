@@ -1,3 +1,4 @@
+
 import { useSelector } from "react-redux";
 import MovieList from "./MovieList";
 const AIMovieSuggestions = () => {
@@ -6,10 +7,10 @@ const AIMovieSuggestions = () => {
   if (!movieList || !movieResults) return null;
 
   return (
-    <div className="p-4 m-4 text-white flex flex-col gap-4 rounded-lg items-start">
+    <div className="p-2 sm:p-4 m-2 sm:m-4 text-white flex flex-col gap-4 rounded-lg items-start w-full">
       {movieList.map((movieName, index) => (
         <MovieList
-          key="{{movieName}}"
+          key={movieName}
           title={movieName}
           movies={movieResults[index]}
         />

@@ -1,3 +1,4 @@
+// filepath: d:\Learning React(scratch)\CineMind\my-react-app\src\Components\AISearchBar.jsx
 import lang from "../utils/languageConstants";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
@@ -10,7 +11,7 @@ import { useDispatch } from "react-redux";
 const AISearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const searchMovieTMDB = async (movie) => {
     const data = await fetch(
@@ -18,7 +19,7 @@ const AISearchBar = () => {
         movie
       )}&include_adult=false&language=en-US&page=1`,
       API_OPTIONS
-    ); 
+    );
     const json = await data.json();
 
     return json.results;
@@ -66,34 +67,29 @@ const AISearchBar = () => {
         .split(",")
         .map((name) => name.trim());
 
-        const promiseArray=movieNames.map((movie)=>searchMovieTMDB(movie))
+      const promiseArray = movieNames.map((movie) => searchMovieTMDB(movie));
 
-        const tmbdResults=await Promise.all(promiseArray);
+      const tmbdResults = await Promise.all(promiseArray);
 
-        dispatch(addAiMovieResult({movieList: movieNames, movieResults:tmbdResults}));
-          
-        
-
-      // You can set this to a state variable to display in your UI
+      dispatch(addAiMovieResult({ movieList: movieNames, movieResults: tmbdResults }));
     } catch (error) {
       alert("Something went wrong while fetching movie recommendations.");
     }
   };
   return (
-    <div className="flex justify-center w-full mb-8 mt-16 z-[130]">
-
+    <div className="flex justify-center w-full mb-8 mt-8 sm:mt-16 z-[130]">
       <form
-        className="flex items-center justify-center w-full h-12"
+        className="flex flex-row sm:flex-row items-center justify-center w-full mr-2 sm:mr-0 sm:gap-0"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
-          className="w-1/2 h-12 px-4 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 "
+          className="w-full sm:w-1/2 h-12 px-4 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 text-base"
           type="text"
           placeholder={lang[langKey].AISearchPlaceholder}
         />
         <button
-          className="bg-red-600 text-white px-5 py-3 mx-1 rounded-md cursor-pointer hover:opacity-80 transition"
+          className="bg-red-600 text-white px-5 py-3 rounded-md cursor-pointer hover:opacity-80 transition  sm:mt-0"
           onClick={handleAISearchClick}
         >
           {lang[langKey].search}

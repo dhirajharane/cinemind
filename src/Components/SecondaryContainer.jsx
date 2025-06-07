@@ -1,4 +1,4 @@
-// filepath: d:\Learning React(scratch)\CineMind\my-react-app\src\Components\SecondaryContainer.jsx
+
 import MovieList from "./MovieList";
 import { useSelector } from "react-redux";
 
