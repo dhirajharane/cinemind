@@ -1,4 +1,4 @@
-// filepath: d:\Learning React(scratch)\CineMind\my-react-app\src\Components\AISearchBar.jsx
+
 import lang from "../utils/languageConstants";
 import { useSelector } from "react-redux";
 import { useRef } from "react";

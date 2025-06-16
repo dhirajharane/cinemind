@@ -2,20 +2,20 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { GOOGLE_KEY } from "../hidden";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: GOOGLE_KEY,
-  authDomain: "cinemind-web.firebaseapp.com",
-  projectId: "cinemind-web",
-  storageBucket: "cinemind-web.firebasestorage.app",
-  messagingSenderId: "1038849076462",
-  appId: "1:1038849076462:web:99a24d2adbef4733f197ff",
-  measurementId: "G-EDFRWN6WNX"
+  apiKey: import.meta.env.VITE_GOOGLE_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
