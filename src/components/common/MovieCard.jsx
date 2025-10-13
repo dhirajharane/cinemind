@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { IMG_CDN } from "../utils/constants";
+import { IMG_CDN } from "../../utils/constants";
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();

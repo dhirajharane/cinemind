@@ -1,7 +1,6 @@
-
 import AIMovieSuggestions from "./AIMovieSuggestions";
 import AISearchBar from "./AISearchBar";
-import { BANNER } from "../utils/constants";
+import { BANNER } from "../../utils/constants";
 
 const AISearch = () => {
   return (

@@ -1,12 +1,8 @@
-
-import lang from "../utils/languageConstants";
-import { useSelector } from "react-redux";
+import lang from "../../utils/languageConstants";
+import { useSelector, useDispatch } from "react-redux";
 import { useRef } from "react";
-import { GEMINI_URL } from "../utils/constants";
-import { API_OPTIONS } from "../hidden";
-
-import { addAiMovieResult } from "../utils/AISlice";
-import { useDispatch } from "react-redux";
+import { GEMINI_URL, API_OPTIONS } from "../../utils/constants";
+import { addAiMovieResult } from "../../store/slices/AISlice";
 
 const AISearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
@@ -61,14 +57,11 @@ const AISearchBar = () => {
       }
 
       const data = await response.json();
-
-      // Extract generated text (movie names in array format)
       const movieNames = (data.candidates?.[0]?.content?.parts?.[0]?.text || "")
         .split(",")
         .map((name) => name.trim());
 
       const promiseArray = movieNames.map((movie) => searchMovieTMDB(movie));
-
       const tmbdResults = await Promise.all(promiseArray);
 
       dispatch(addAiMovieResult({ movieList: movieNames, movieResults: tmbdResults }));
@@ -76,6 +69,7 @@ const AISearchBar = () => {
       alert("Something went wrong while fetching movie recommendations.");
     }
   };
+
   return (
     <div className="flex justify-center w-full mb-8 mt-8 sm:mt-16 z-[130]">
       <form
@@ -98,4 +92,5 @@ const AISearchBar = () => {
     </div>
   );
 };
+
 export default AISearchBar;

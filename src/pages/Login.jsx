@@ -1,11 +1,15 @@
-import Header from "./Header";
-import { BANNER,PROFILE_PHOTO } from "../utils/constants";
+import Header from "../components/common/Header";
+import { BANNER, PROFILE_PHOTO } from "../utils/constants";
 import { useState, useRef } from "react";
 import { checkValidData } from "../utils/validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../services/firebase";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+import { addUser } from "../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -21,12 +25,14 @@ const Login = () => {
   const name = useRef(null);
 
   const handleButtonClick = async () => {
-    const message = checkValidData(email.current.value, password.current.value);
+    const message = checkValidData(
+      email.current.value,
+      password.current.value
+    );
     setErrorMessage(message);
     if (message) return;
 
     if (!isSignIn) {
-      // Sign Up
       try {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
@@ -45,7 +51,6 @@ const Login = () => {
         setErrorMessage(error.message);
       }
     } else {
-      // Sign In
       try {
         await signInWithEmailAndPassword(
           auth,
@@ -64,7 +69,11 @@ const Login = () => {
     <div>
       <Header />
       <div>
-        <img src={BANNER} alt="banner" className="w-full h-screen object-cover fixed top-0 left-0 -z-10 opacity-100" />
+        <img
+          src={BANNER}
+          alt="banner"
+          className="w-full h-screen object-cover fixed top-0 left-0 -z-10 opacity-100"
+        />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -114,4 +123,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

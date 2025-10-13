@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { LOGO_IMG, SignedInLogo } from "../utils/constants";
+import { LOGO_IMG, SignedInLogo } from "../../utils/constants";
 import { signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../../store/slices/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
-import { toggleAISearchView } from "../utils/AISlice";
-import { SUPPORTED_LANGUAGES } from "../utils/constants";
-import { changeLanguage } from "../utils/configSlice";
+import { toggleAISearchView } from "../../store/slices/AISlice";
+import { SUPPORTED_LANGUAGES } from "../../utils/constants";
+import { changeLanguage } from "../../store/slices/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -35,7 +35,6 @@ const Header = () => {
       });
   };
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -72,12 +71,11 @@ const Header = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     <header className="fixed top-0 left-0 w-full z-[110] bg-gradient-to-b from-black/95 via-black/95 to-transparent">
       <div className="flex flex-row sm:flex-row items-center justify-between  sm:px-8 py-3 w-full max-w-full">
-        {/* Logo */}
         <div className="flex items-center justify-center w-full sm:w-auto">
           <img
             className="w-36 sm:w-60 h-auto -mt-8 sm:-mt-18 -ml-57 sm:ml-2"
@@ -89,7 +87,6 @@ const Header = () => {
           />
         </div>
 
-        {/* Controls */}
         {user && (
           <div className="flex gap-4 -ml-32 sm:gap-6 -mt-8 sm:-mt-18 mr- 4">
             {showAISearch && (
@@ -110,7 +107,6 @@ const Header = () => {
             >
               {showAISearch ? "Home" : "Smart Movie Genie"}
             </button>
-            {/* Profile Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <img
                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 mr-10 border-white shadow-lg cursor-pointer hover:scale-110 transition"

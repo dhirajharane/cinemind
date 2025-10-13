@@ -1,4 +1,3 @@
-
 # CineMind 🎬🤖
 
 **CineMind** is a modern, AI-powered movie streaming and discovery web app built with React, Redux, Firebase, and Tailwind CSS. It combines the power of TMDB's movie database with Google's Gemini AI to deliver smart movie recommendations, beautiful UI, and a seamless user experience.
@@ -35,13 +34,21 @@
 
 ## 🗂️ Folder Structure
 
-```
 my-react-app/
 ├── .firebase/
 ├── node_modules/
 ├── src/
-│   ├── Components/
+│   ├── assets/
+│   │   └── images/
+│   ├── components/
+│   │   ├── common/
+│   │   ├── home/
+│   │   └── search/
 │   ├── hooks/
+│   ├── pages/
+│   ├── services/
+│   ├── store/
+│   │   └── slices/
 │   ├── utils/
 │   ├── App.jsx
 │   ├── index.css
@@ -56,7 +63,6 @@ my-react-app/
 ├── package.json
 ├── README.md
 └── vite.config.js
-```
 
 ---
 
@@ -77,22 +83,22 @@ my-react-app/
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
-```bash
+`bash
 git clone https://github.com/dhirajharane/cinemind.git
 cd cinemind/my-react-app
-```
+`
 
 ### 2. Install dependencies
-```bash
+`bash
 npm install
-```
+`
 
 ### 3. Set up API Keys
 All API keys and secrets are stored in `hidden.js` at the project root.  
 **Do NOT commit `hidden.js` to version control.**
 
 Example:
-```js
+`js
 export const GEMINI_KEY = "your_google_gemini_api_key";
 export const API_OPTIONS = {
   method: "GET",
@@ -101,7 +107,7 @@ export const API_OPTIONS = {
     Authorization: "Bearer your_tmdb_v4_read_access_token",
   },
 };
-```
+`
 
 - Get your TMDB v4 token from [TMDB API settings](https://www.themoviedb.org/settings/api)  
 - Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
@@ -110,9 +116,9 @@ export const API_OPTIONS = {
 Update your `firebase.js` with your Firebase project credentials.
 
 ### 5. Start the development server
-```bash
+`bash
 npm run dev
-```
+`
 Visit `http://localhost:5173` in your browser.
 
 ---

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { IMG_CDN } from "../utils/constants";
-import { API_OPTIONS } from "../hidden";
+import { API_OPTIONS } from "../utils/constants";
 
 const ShowMovieDetails = () => {
   const { id } = useParams();
@@ -11,7 +11,6 @@ const ShowMovieDetails = () => {
   const [credits, setCredits] = useState(null);
   const [trailer, setTrailer] = useState(null);
 
-  // Single fetch helper to avoid repeating try/catch
   const fetchData = useCallback(async (url) => {
     try {
       const res = await fetch(url, API_OPTIONS);
@@ -27,11 +26,14 @@ const ShowMovieDetails = () => {
     if (!id) return;
 
     const loadMovieData = async () => {
-      // Run all fetches in parallel for faster loading
       const [movieData, creditsData, videosData] = await Promise.all([
         fetchData(`https://api.themoviedb.org/3/movie/${id}?language=en-US`),
-        fetchData(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`),
-        fetchData(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`),
+        fetchData(
+          `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`
+        ),
+        fetchData(
+          `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`
+        ),
       ]);
 
       if (movieData) setMovie(movieData);
@@ -54,7 +56,6 @@ const ShowMovieDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col items-center pt-20 sm:pt-24 px-1 sm:px-2 md:px-8">
       <div className="w-full max-w-2xl sm:max-w-6xl bg-black bg-opacity-80 rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden">
-        {/* Poster and Details */}
         <div className="md:w-1/2 w-full flex flex-col items-center justify-center p-4 sm:p-6">
           <img
             src={IMG_CDN + movie.poster_path}
@@ -99,7 +100,6 @@ const ShowMovieDetails = () => {
           </button>
         </div>
 
-        {/* Trailer and Cast */}
         <div className="md:w-1/2 w-full flex flex-col items-center justify-center bg-black bg-opacity-70 p-2 sm:p-4">
           {trailer?.key ? (
             <iframe
@@ -114,7 +114,6 @@ const ShowMovieDetails = () => {
             <div className="text-gray-400">Trailer not available.</div>
           )}
 
-          {/* Starcast */}
           <div className="mt-8 w-full">
             <h2 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-4">
               Star Cast

@@ -1,6 +1,5 @@
-
 import { useSelector } from "react-redux";
-import MovieList from "./MovieList";
+import MovieList from "../common/MovieList";
 const AIMovieSuggestions = () => {
   const { movieList, movieResults } = useSelector((store) => store.ai);
 

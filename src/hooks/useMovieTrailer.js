@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { API_OPTIONS } from "../hidden";
-import { addTrailerVideo } from "../utils/moviesSlice";
+import { API_OPTIONS } from "../utils/constants";
+import { addTrailerVideo } from "../store/slices/moviesSlice";
 
 const useMovieTrailer = (movieId) => {
   const dispatch = useDispatch();
@@ -30,7 +30,6 @@ const useMovieTrailer = (movieId) => {
   }, [movieId, dispatch]);
 
   useEffect(() => {
-    // Only fetch if the trailer isn't already in store or movieId changes
     if (!currentTrailer || currentTrailer.movieId !== movieId) {
       getMovieVideos();
     }
