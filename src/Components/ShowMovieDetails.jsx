@@ -1,53 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { IMG_CDN} from "../utils/constants";
+import { IMG_CDN } from "../utils/constants";
 import { API_OPTIONS } from "../hidden";
 
 const ShowMovieDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
   const [trailer, setTrailer] = useState(null);
-  const navigate = useNavigate();
+
+  // Single fetch helper to avoid repeating try/catch
+  const fetchData = useCallback(async (url) => {
+    try {
+      const res = await fetch(url, API_OPTIONS);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      return null;
+    }
+  }, []);
 
   useEffect(() => {
-    // Fetch movie details
-    const fetchMovieDetails = async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
-        API_OPTIONS
-      );
-      const data = await res.json();
-      setMovie(data);
-    };
+    if (!id) return;
 
-    // Fetch credits
-    const fetchCredits = async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
-        API_OPTIONS
-      );
-      const data = await res.json();
-      setCredits(data);
-    };
+    const loadMovieData = async () => {
+      // Run all fetches in parallel for faster loading
+      const [movieData, creditsData, videosData] = await Promise.all([
+        fetchData(`https://api.themoviedb.org/3/movie/${id}?language=en-US`),
+        fetchData(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`),
+        fetchData(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`),
+      ]);
 
-    // Fetch trailer
-    const fetchTrailer = async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
-        API_OPTIONS
-      );
-      const data = await res.json();
-      const trailerVid = data.results?.find(
+      if (movieData) setMovie(movieData);
+      if (creditsData) setCredits(creditsData);
+
+      const trailerVid = videosData?.results?.find(
         (vid) => vid.type === "Trailer" && vid.site === "YouTube"
       );
-      setTrailer(trailerVid);
+      setTrailer(trailerVid || null);
     };
 
-    fetchMovieDetails();
-    fetchCredits();
-    fetchTrailer();
-  }, [id]);
+    loadMovieData();
+  }, [id, fetchData]);
 
   if (!movie) return <div className="text-white p-8">Loading...</div>;
 
@@ -64,14 +61,19 @@ const ShowMovieDetails = () => {
             alt={movie.title}
             className="rounded-lg shadow-lg w-32 sm:w-full max-w-xs mb-4 sm:mb-6"
           />
-          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 text-center">{movie.title}</h1>
-          <p className="text-gray-300 text-base sm:text-lg mb-4 text-center">{movie.tagline}</p>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 text-center">
+            {movie.title}
+          </h1>
+          <p className="text-gray-300 text-base sm:text-lg mb-4 text-center">
+            {movie.tagline}
+          </p>
+
           <div className="flex gap-2 sm:gap-4 mb-4 flex-wrap justify-center">
             <span className="bg-red-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
               {movie.release_date?.slice(0, 4)}
             </span>
             <span className="bg-gray-700 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-               {movie.vote_average?.toFixed(1)} ★
+              {movie.vote_average?.toFixed(1)} ★
             </span>
             <span className="bg-gray-700 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
               {movie.original_language?.toUpperCase()}
@@ -80,10 +82,15 @@ const ShowMovieDetails = () => {
               {movie.runtime} min
             </span>
           </div>
+
           <p className="text-gray-400 mb-2 text-center text-sm sm:text-base">
-            <span className="font-semibold text-white">Director:</span> {director?.name || "N/A"}
+            <span className="font-semibold text-white">Director:</span>{" "}
+            {director?.name || "N/A"}
           </p>
-          <p className="text-gray-400 mb-4 text-center text-sm sm:text-base">{movie.overview}</p>
+          <p className="text-gray-400 mb-4 text-center text-sm sm:text-base">
+            {movie.overview}
+          </p>
+
           <button
             className="bg-red-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md text-base sm:text-lg font-bold hover:bg-red-700 transition mb-4 sm:mb-0"
             onClick={() => navigate("/browse")}
@@ -91,7 +98,8 @@ const ShowMovieDetails = () => {
             Back to Home
           </button>
         </div>
-        {/* Trailer */}
+
+        {/* Trailer and Cast */}
         <div className="md:w-1/2 w-full flex flex-col items-center justify-center bg-black bg-opacity-70 p-2 sm:p-4">
           {trailer?.key ? (
             <iframe
@@ -105,9 +113,12 @@ const ShowMovieDetails = () => {
           ) : (
             <div className="text-gray-400">Trailer not available.</div>
           )}
+
           {/* Starcast */}
           <div className="mt-8 w-full">
-            <h2 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-4">Star Cast</h2>
+            <h2 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-4">
+              Star Cast
+            </h2>
             <div className="flex flex-wrap gap-2 sm:gap-4 justify-center">
               {cast.map((actor) => (
                 <div
@@ -124,8 +135,12 @@ const ShowMovieDetails = () => {
                     alt={actor.name}
                     className="w-14 h-20 sm:w-20 sm:h-28 object-cover rounded-lg shadow-md mb-1 sm:mb-2 bg-gray-800"
                   />
-                  <span className="text-[10px] sm:text-xs text-white text-center">{actor.name}</span>
-                  <span className="text-[8px] sm:text-[10px] text-gray-400 text-center">{actor.character}</span>
+                  <span className="text-[10px] sm:text-xs text-white text-center">
+                    {actor.name}
+                  </span>
+                  <span className="text-[8px] sm:text-[10px] text-gray-400 text-center">
+                    {actor.character}
+                  </span>
                 </div>
               ))}
             </div>
@@ -135,4 +150,5 @@ const ShowMovieDetails = () => {
     </div>
   );
 };
+
 export default ShowMovieDetails;
